@@ -47,13 +47,13 @@ def init() {
 def doorClosed(evt) {
   state.lastClosed = now()  
   def delay = knockDelay ?: 0
-  log.debug($"Door closed at {now()}. Lock to trigger in {delay} minutes.")
+  log.debug("Door closed at ${now()}. Lock to trigger in ${delay} minutes.")
   runIn(delay * 60, "lockDoor")
 }
 
 def doorOpened(evt) {
   state.lastOpened = now()
-  log.debug($"Door opened at {now()}.")
+  log.debug("Door opened at ${now()}.")
   lockSensor.unlock()
 }
 
@@ -64,14 +64,16 @@ def lockLocked(evt) {
 def lockUnlocked(evt) {
   state.lastUnlocked = now()
   def delay = knockDelay ?: 0
-  log.debug($"{evt}")
-  log.debug($"Unlocked at {now()}.")
+  log.debug("${evt}")
+  log.debug("Unlocked at ${now()}.")
   runIn(0, "lockDoor", [data: [flag: true]])
 }
 
 def lockDoor(data) {
   if(data && data.flag) {
+    log.debug("Unlocked at ${now()}.")
     return
   }
   lockSensor.lock()
+  log.debug("Locked at ${now()}.")
 }
