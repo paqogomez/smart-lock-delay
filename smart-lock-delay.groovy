@@ -54,7 +54,7 @@ def doorClosed(evt) {
 def doorOpened(evt) {
   state.lastOpened = now()
   log.debug($"Door opened at {now()}.")
-  lockSensor.Unlock
+  lockSensor.unlock()
 }
 
 def lockLocked(evt) {
@@ -73,5 +73,5 @@ def lockDoor(data) {
   if(data && data.flag) {
     return
   }
-  lockSensor.lock
+  lockSensor.lock()
 }
