@@ -47,8 +47,8 @@ def init() {
 def doorClosed(evt) {
   state.lastClosed = now()  
   def delay = knockDelay ?: 0
-  log.debug("Door closed at ${now()}. Lock to trigger in ${delay} minutes.")
-  runIn(delay * 60, "lockDoor")
+  log.debug("Door closed at ${now()}. Lock to trigger in ${smartDelay} minutes.")
+  runIn(smartDelay * 60, "lockDoor")
 }
 
 def doorOpened(evt) {
@@ -63,7 +63,6 @@ def lockLocked(evt) {
 
 def lockUnlocked(evt) {
   state.lastUnlocked = now()
-  def delay = knockDelay ?: 0
   log.debug("${evt}")
   log.debug("Unlocked at ${now()}.")
   runIn(0, "lockDoor", [data: [flag: true]])
